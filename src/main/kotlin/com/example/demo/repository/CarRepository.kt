@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CarDao: CrudRepository<CarDto, Int> {
+interface CarRepository: CrudRepository<CarDto, Int> {
 }
