@@ -8,9 +8,10 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "CARS")
-class CarDto(val model: String = "",
-             val color: String = "",
-             val brand: String = "",
-             val plates: String = "",
-             val year: Int = -1,
-             @Id @GeneratedValue(strategy = GenerationType.AUTO) var id: Long? = -1)
+class CarDto(
+    var model: String = "",
+    var color: String = "",
+    var brand: String = "",
+    var plates: String = "",
+    var year: Int = -1,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long? = null)
