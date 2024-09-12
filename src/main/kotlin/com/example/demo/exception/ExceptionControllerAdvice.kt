@@ -13,16 +13,6 @@ import java.time.LocalDateTime
 class ExceptionControllerAdvice {
 
     @ExceptionHandler
-    fun handleIllegalStateException(ex: IllegalStateException): ResponseEntity<ErrorMessage> {
-        val errorMessage = ErrorMessage(
-            HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            ex.message,
-            LocalDateTime.now()
-        )
-        return ResponseEntity(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-
-    @ExceptionHandler
     fun handleIllegalArgumentException(ex: IllegalArgumentException): ResponseEntity<ErrorMessage> {
         val errorMessage = ErrorMessage(
             HttpStatus.BAD_REQUEST.value(),
@@ -40,5 +30,15 @@ class ExceptionControllerAdvice {
             LocalDateTime.now()
         )
         return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler
+    fun handleException(ex: Exception): ResponseEntity<ErrorMessage> {
+        val errorMessage = ErrorMessage(
+            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            ex.message,
+            LocalDateTime.now()
+        )
+        return ResponseEntity(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 }
