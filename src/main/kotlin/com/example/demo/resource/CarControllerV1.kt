@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/car", produces = [MediaType.APPLICATION_JSON_VALUE])
-class CarV1 (val carService: CarService) {
+class CarControllerV1 (val carService: CarService) {
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: Int): Car {
