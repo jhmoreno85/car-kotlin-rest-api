@@ -13,5 +13,6 @@ class CarDto(
     var color: String = "",
     var brand: String = "",
     var plates: String = "",
+    var vin: String = "",
     var year: Int = -1,
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long? = null)

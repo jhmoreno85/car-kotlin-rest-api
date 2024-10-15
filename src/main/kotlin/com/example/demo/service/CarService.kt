@@ -8,35 +8,41 @@ import com.example.demo.repository.dto.CarDto
 import org.springframework.stereotype.Service
 
 @Service
-class CarService(val carRepository: CarRepository) {
+class CarService(val carRepository: CarRepository) : Crud<Car> {
 
-    fun get(id: Int): Car {
+    override fun get(id: Int): Car {
         return carRepository.findById(id)
-            .map { Car(it.id ?: -1, it.model, it.color, it.brand, it.plates, it.year) }
+            .map { Car(it.id ?: -1, it.model, it.color, it.brand, it.plates, it.vin, it.year) }
             .orElseThrow { NotFoundException("Car not found") }
     }
 
-    fun getAll(): List<Car> {
+    override fun getAll(): List<Car> {
         return carRepository.findAll()
-            .map { Car(it.id ?: -1, it.model, it.color, it.brand, it.plates, it.year) }
+            .map { Car(it.id ?: -1, it.model, it.color, it.brand, it.plates, it.vin, it.year) }
             .toList()
     }
 
-    fun save(car: Car): Car {
-        val result = carRepository.save(CarDto(car.model, car.color, car.brand, car.plates, car.year))
+    override fun save(car: Car): Car {
+        val result = carRepository.save(CarDto(car.model, car.color, car.brand, car.plates, car.vin, car.year))
         car.id = result.id ?: throw IllegalStateException("ID was not created")
         return car
     }
 
-    fun update(car: Car): Car {
+    override fun update(car: Car): Car {
         val carDto = carRepository.findById(car.id.toInt())
             .orElseThrow { IllegalArgumentException("Car doesn't exist") }
         carDto.model = car.model
         carDto.brand = car.brand
         carDto.color = car.color
         carDto.plates = car.plates
+        carDto.vin = car.vin
         carDto.year = car.year
         carRepository.save(carDto)
         return car
+    }
+
+    override fun delete(id: Int) {
+        carRepository.findById(id)
+            .ifPresentOrElse({ carRepository.deleteById(id) }, { throw NotFoundException("Car not found") })
     }
 }
