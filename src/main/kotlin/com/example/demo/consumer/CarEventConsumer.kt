@@ -18,7 +18,7 @@ class CarEventConsumer(val carRepository: CarRepository, val mapper: ObjectMappe
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
     @KafkaListener(topics = [TOPIC_NAME], groupId = GROUP_ID)
-    fun firstListener(message: String) {
+    fun listener(message: String) {
         logger.info("Message received: [$message]")
         val car = mapper.readValue(message, CarDto::class.java)
         carRepository.save(CarDto(car.model, car.color, car.brand, car.plates, car.vin, car.year))
