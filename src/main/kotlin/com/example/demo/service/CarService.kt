@@ -2,13 +2,16 @@ package com.example.demo.service
 
 import com.example.demo.exception.NotFoundException
 import com.example.demo.model.Car
+import com.example.demo.producer.CarEventProducer
 import com.example.demo.repository.CarRepository
 import com.example.demo.repository.dto.CarDto
+
+import com.fasterxml.jackson.databind.ObjectMapper
 
 import org.springframework.stereotype.Service
 
 @Service
-class CarService(val carRepository: CarRepository) : Crud<Car> {
+class CarService(val carRepository: CarRepository, val carEventProducer: CarEventProducer, val mapper: ObjectMapper) : Crud<Car> {
 
     override fun get(id: Int): Car {
         return carRepository.findById(id)
@@ -26,6 +29,10 @@ class CarService(val carRepository: CarRepository) : Crud<Car> {
         val result = carRepository.save(CarDto(car.model, car.color, car.brand, car.plates, car.vin, car.year))
         car.id = result.id ?: throw IllegalStateException("ID was not created")
         return car
+    }
+
+    override fun saveEvent(car: Car) {
+        carEventProducer.sendMessage(mapper.writeValueAsString(car))
     }
 
     override fun update(car: Car): Car {

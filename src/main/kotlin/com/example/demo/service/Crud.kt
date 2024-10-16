@@ -4,6 +4,7 @@ interface Crud<T> {
     fun get(id: Int): T
     fun getAll(): List<T>
     fun save(t: T): T
+    fun saveEvent(t: T)
     fun update(t: T): T
     fun delete(id: Int)
 }

@@ -32,6 +32,11 @@ class CarControllerV1 (val carService: Crud<Car>) {
         return carService.save(car)
     }
 
+    @PostMapping("/event", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun saveEvent(@RequestBody car: Car) {
+        carService.saveEvent(car)
+    }
+
     @PutMapping("", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun update(@RequestBody car: Car): Car {
         return carService.update(car)
