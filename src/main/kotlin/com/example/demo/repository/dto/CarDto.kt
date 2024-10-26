@@ -7,7 +7,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "CARS")
+@Table(name = "CAR")
 class CarDto(
     var model: String = "",
     var color: String = "",
