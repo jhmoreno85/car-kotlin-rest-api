@@ -3,7 +3,7 @@ package com.example.demo.resource
 import com.example.demo.model.Car
 import com.example.demo.service.Crud
 
-import org.springframework.http.MediaType
+import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/v1/car", produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping("/v1/car", produces = [APPLICATION_JSON_VALUE])
 class CarControllerV1 (val carService: Crud<Car>) {
 
     @GetMapping("/{id}")
@@ -27,17 +27,17 @@ class CarControllerV1 (val carService: Crud<Car>) {
         return carService.getAll()
     }
 
-    @PostMapping("", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("", consumes = [APPLICATION_JSON_VALUE])
     fun save(@RequestBody car: Car): Car {
         return carService.save(car)
     }
 
-    @PostMapping("/event", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/event", consumes = [APPLICATION_JSON_VALUE])
     fun saveEvent(@RequestBody car: Car) {
         carService.saveEvent(car)
     }
 
-    @PutMapping("", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PutMapping("", consumes = [APPLICATION_JSON_VALUE])
     fun update(@RequestBody car: Car): Car {
         return carService.update(car)
     }
